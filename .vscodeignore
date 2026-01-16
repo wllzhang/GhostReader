@@ -2,15 +2,13 @@
 .vscode/**
 .vscode-test/**
 src/**
+config/**
+scripts/**
 .gitignore
 .editorconfig
-.prettierrc.json
-eslint.config.js
 tsconfig.json
-build.js
 
 # Build artifacts
-out/
 node_modules/
 *.vsix
 
