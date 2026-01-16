@@ -25,6 +25,8 @@ const config: Config = {
     locales: ['zh-Hans'],
   },
 
+  staticDirectories: ['static', '../images'],
+
   presets: [
     [
       'classic',
