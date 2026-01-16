@@ -41,21 +41,12 @@ code --install-extension GhostReader-2.0.0.vsix
 
 ### 1. 导入书籍
 
-安装成功后，侧边栏会显示插件图标：
+1. 安装成功后，侧边栏会显示插件图标, 点击 `+` 按钮导入 txt 书籍, 点击书架中的书籍开始阅读：
 
 ![Install](./docs/install.png)
 
-点击 `+` 按钮导入 txt 书籍：
 
-![Import book](./docs/import-book.png)
-
-### 2. 开始阅读
-
-点击书架中的书籍开始阅读：
-
-![How to read](./docs/read.png)
-
-### 3. 快捷键
+### 2. 快捷键
 
 | 操作 | Windows | Mac |
 |------|---------|-----|
@@ -64,12 +55,19 @@ code --install-extension GhostReader-2.0.0.vsix
 
 **注意**: 需要先切换到 **Reading mode** 才能使用快捷键！
 
-### 4. 模式切换
+
+![Install](./docs/quickkey.png)
+
+
+### 3. 状态栏
 
 状态栏有两个模式按钮：
 
 - **📖 Reading mode** - 启用阅读快捷键
 - **💻 Coding mode** - 禁用阅读快捷键（默认）
+
+![Install](./docs/status.png)
+
 
 停止阅读后会自动切换回 `Coding` 模式，避免影响编码工作。
 
@@ -84,6 +82,8 @@ code --install-extension GhostReader-2.0.0.vsix
 ## ⚙️ 配置选项
 
 GhostReader 支持以下配置项（在 VSCode 设置中搜索 "GhostReader"）：
+
+![Install](./docs/args.png)
 
 ### 显示行数 (`ghostReader.displayLines`)
 
@@ -110,7 +110,6 @@ GhostReader 支持以下配置项（在 VSCode 设置中搜索 "GhostReader"）�
 }
 ```
 
-详细配置说明请查看 [配置文档](./docs/CONFIGURATION.md)。
 
 ## 📝 支持格式
 
