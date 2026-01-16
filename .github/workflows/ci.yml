@@ -6,13 +6,11 @@ on:
     paths-ignore:
       - "docs/**"
       - "**.md"
-      - ".vitepress/**"
   pull_request:
     branches: [main, master, develop]
     paths-ignore:
       - "docs/**"
       - "**.md"
-      - ".vitepress/**"
 jobs:
   test:
     runs-on: ${{ matrix.os }}

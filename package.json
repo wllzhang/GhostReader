@@ -31,7 +31,7 @@
     "vscode 状态栏",
     "status bar"
   ],
-  "icon": "public/logo.png",
+  "icon": "docs//public/logo.png",
   "activationEvents": [
     "onView:bookList"
   ],
@@ -113,7 +113,7 @@
         {
           "id": "GhostReader",
           "title": "GhostReader",
-          "icon": "public/logo.svg"
+          "icon": "docs/public/logo.svg"
         }
       ]
     },
