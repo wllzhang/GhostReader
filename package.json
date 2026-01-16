@@ -157,7 +157,10 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "vscode-test",
     "package": "vsce package",
-    "publish": "vsce publish"
+    "publish": "vsce publish",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -171,6 +174,7 @@
     "esbuild": "^0.24.2",
     "eslint": "^9.18.0",
     "prettier": "^3.4.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitepress": "^1.0.0"
   }
 }

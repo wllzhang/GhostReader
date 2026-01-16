@@ -43,21 +43,18 @@ code --install-extension GhostReader-2.0.0.vsix
 
 1. 安装成功后，侧边栏会显示插件图标, 点击 `+` 按钮导入 txt 书籍, 点击书架中的书籍开始阅读：
 
-![Install](./docs/install.png)
-
+![Install](./docs/public/install.png)
 
 ### 2. 快捷键
 
-| 操作 | Windows | Mac |
-|------|---------|-----|
-| 上一页 | `Ctrl+Left` | `Cmd+Left` |
+| 操作   | Windows      | Mac         |
+| ------ | ------------ | ----------- |
+| 上一页 | `Ctrl+Left`  | `Cmd+Left`  |
 | 下一页 | `Ctrl+Right` | `Cmd+Right` |
 
 **注意**: 需要先切换到 **Reading mode** 才能使用快捷键！
 
-
-![Install](./docs/quickkey.png)
-
+![Install](./docs/public/quickkey.png)
 
 ### 3. 状态栏
 
@@ -66,8 +63,7 @@ code --install-extension GhostReader-2.0.0.vsix
 - **📖 Reading mode** - 启用阅读快捷键
 - **💻 Coding mode** - 禁用阅读快捷键（默认）
 
-![Install](./docs/status.png)
-
+![Install](./docs/public/status.png)
 
 停止阅读后会自动切换回 `Coding` 模式，避免影响编码工作。
 
@@ -83,7 +79,7 @@ code --install-extension GhostReader-2.0.0.vsix
 
 GhostReader 支持以下配置项（在 VSCode 设置中搜索 "GhostReader"）：
 
-![Install](./docs/args.png)
+![Install](./docs/public/args.png)
 
 ### 显示行数 (`ghostReader.displayLines`)
 
@@ -109,7 +105,6 @@ GhostReader 支持以下配置项（在 VSCode 设置中搜索 "GhostReader"）�
   "ghostReader.autoStopDelay": 30
 }
 ```
-
 
 ## 📝 支持格式
 
