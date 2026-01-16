@@ -11,7 +11,7 @@ sidebar_position: 1
 3. 搜索 "GhostReader"
 4. 点击安装
 
-![安装插件](/install.png)
+![安装插件](/main.png)
 
 ## 从 VSIX 文件安装
 
@@ -21,4 +21,3 @@ sidebar_position: 1
 2. 在 VS Code 中按 `Ctrl+Shift+P`
 3. 输入 "Extensions: Install from VSIX..."
 4. 选择下载的文件
-
