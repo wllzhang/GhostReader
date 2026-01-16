@@ -41,8 +41,7 @@ export class Book {
       // 使用 updateDisplay 来应用配置
       this.updateDisplay();
       
-      // 自动显示阅读控制按钮并切换到 Reading 模式
-      this.app.statusBar.showReadingControls();
+      // 自动切换到 Reading 模式（会自动显示阅读控制按钮并启动阅读）
       commands.executeCommand(Commands.SwitchReadingMode);
 
       this.initialized = true;
@@ -141,8 +140,8 @@ export class Book {
 
     this.autoStopTimer = setTimeout(() => {
       if (this.isReading) {
-        this.pause();
-        this.app.statusBar.hideReadingControls();
+        // 切换到 Coding 模式（会自动暂停阅读并隐藏控制按钮）
+        commands.executeCommand(Commands.SwitchCodingMode);
         message('已自动停止阅读');
       }
     }, delay * 1000); // 转换为毫秒

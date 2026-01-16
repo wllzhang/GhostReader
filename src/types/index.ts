@@ -19,8 +19,6 @@ export enum Commands {
   PrevLine = 'GhostReader.prev',
   NextLine = 'GhostReader.next',
   JumpLine = 'GhostReader.jump',
-  Start = 'GhostReader.start',
-  Stop = 'GhostReader.stop',
   SwitchReadingMode = 'GhostReader.switchReadingMode',
   SwitchCodingMode = 'GhostReader.switchCodingMode',
 }
@@ -38,13 +36,11 @@ export enum CustomWhenClauseContext {
 export enum StatusBarPriority {
   ImportBook = 200,
   Process = 300,
-  Start = 400,
-  Stop = 500,
-  NextLine = 600,
-  PrevLine = 700,
-  JumpLine = 800,
-  DisableKeyBind = 900,
-  ActiveKeyBind = 1000,
+  NextLine = 400,
+  PrevLine = 500,
+  JumpLine = 600,
+  DisableKeyBind = 700,
+  ActiveKeyBind = 800,
 }
 
 /**

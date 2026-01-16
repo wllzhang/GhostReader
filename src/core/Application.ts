@@ -25,6 +25,7 @@ export class Application {
 
     // 初始化状态栏
     this.statusBar = new StatusBar(context);
+    this.statusBar.setApp(this);
 
     // 初始化文本管理器
     this.bookManager = new BookManager(this);

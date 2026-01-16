@@ -13,6 +13,7 @@ import {
   StatusBarPriority,
   type BookData,
 } from '../types';
+import type { Application } from './Application';
 
 /**
  * 统一的状态栏管理器
@@ -22,8 +23,6 @@ export class StatusBar {
   // 状态栏项
   private contentItem!: StatusBarItem;
   private progressItem!: StatusBarItem;
-  private startItem!: StatusBarItem;
-  private stopItem!: StatusBarItem;
   private prevLineItem!: StatusBarItem;
   private nextLineItem!: StatusBarItem;
   private jumpLineItem!: StatusBarItem;
@@ -31,9 +30,17 @@ export class StatusBar {
   private readingModeItem!: StatusBarItem;
 
   private currentBook?: BookData;
+  private app?: Application;
 
   constructor(private context: ExtensionContext) {
     this.initialize();
+  }
+
+  /**
+   * 设置应用实例引用
+   */
+  setApp(app: Application): void {
+    this.app = app;
   }
 
   /**
@@ -74,23 +81,9 @@ export class StatusBar {
   }
 
   /**
-   * 创建控制按钮（开始、停止、翻页、跳转）
+   * 创建控制按钮（翻页、跳转）
    */
   private createControlItems(): void {
-    // 开始按钮
-    this.startItem = window.createStatusBarItem(StatusBarAlignment.Right, StatusBarPriority.Start);
-    this.startItem.command = Commands.Start;
-    this.startItem.text = '$(run)';
-    this.startItem.tooltip = 'Start';
-    this.context.subscriptions.push(this.startItem);
-
-    // 停止按钮
-    this.stopItem = window.createStatusBarItem(StatusBarAlignment.Right, StatusBarPriority.Stop);
-    this.stopItem.command = Commands.Stop;
-    this.stopItem.text = '$(stop-circle)';
-    this.stopItem.tooltip = 'Stop';
-    this.context.subscriptions.push(this.stopItem);
-
     // 下一行按钮
     this.nextLineItem = window.createStatusBarItem(
       StatusBarAlignment.Right,
@@ -110,6 +103,7 @@ export class StatusBar {
     this.prevLineItem.text = '$(chevron-left)';
     this.prevLineItem.tooltip = 'Previous Line';
     this.context.subscriptions.push(this.prevLineItem);
+    
     // 跳转按钮
     this.jumpLineItem = window.createStatusBarItem(
       StatusBarAlignment.Right,
@@ -152,15 +146,22 @@ export class StatusBar {
    * 注册所有命令
    */
   private registerCommands(): void {
-    // 模式切换命令
+    // 切换到 Reading 模式（相当于 Start）
     this.context.subscriptions.push(
       commands.registerCommand(Commands.SwitchReadingMode, () => {
         commands.executeCommand('setContext', CustomWhenClauseContext.IsReadingMode, isReadingMode);
         this.readingModeItem.show();
         this.codingModeItem.hide();
+        
+        // 启动阅读功能
+        if (this.app?.readingBook) {
+          this.app.readingBook.start();
+          this.showReadingControls();
+        }
       })
     );
 
+    // 切换到 Coding 模式（相当于 Stop）
     this.context.subscriptions.push(
       commands.registerCommand(Commands.SwitchCodingMode, () => {
         commands.executeCommand(
@@ -170,6 +171,12 @@ export class StatusBar {
         );
         this.readingModeItem.hide();
         this.codingModeItem.show();
+        
+        // 暂停阅读功能
+        if (this.app?.readingBook) {
+          this.app.readingBook.pause();
+          this.hideReadingControls();
+        }
       })
     );
   }
@@ -178,8 +185,6 @@ export class StatusBar {
    * 显示阅读控制按钮
    */
   showReadingControls(): void {
-    this.startItem.hide();
-    this.stopItem.show();
     this.contentItem.show();
     this.prevLineItem.show();
     this.nextLineItem.show();
@@ -191,16 +196,11 @@ export class StatusBar {
    * 隐藏阅读控制按钮
    */
   hideReadingControls(): void {
-    this.stopItem.hide();
-    this.startItem.show();
     this.contentItem.hide();
     this.prevLineItem.hide();
     this.nextLineItem.hide();
     this.jumpLineItem.hide();
     this.progressItem.hide();
-
-    // 自动切换到 Coding 模式
-    commands.executeCommand(Commands.SwitchCodingMode);
   }
 
   /**
@@ -249,8 +249,6 @@ export class StatusBar {
   dispose(): void {
     this.contentItem.dispose();
     this.progressItem.dispose();
-    this.startItem.dispose();
-    this.stopItem.dispose();
     this.prevLineItem.dispose();
     this.nextLineItem.dispose();
     this.jumpLineItem.dispose();

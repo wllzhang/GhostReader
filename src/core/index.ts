@@ -60,28 +60,4 @@ function registerReadingCommands(app: Application): void {
       }
     })
   );
-
-  // 开始阅读
-  app.context.subscriptions.push(
-    commands.registerCommand(Commands.Start, () => {
-      if (app.readingBook) {
-        app.readingBook.start();
-        app.statusBar.showReadingControls();
-        // 自动切换到 Reading 模式
-        commands.executeCommand(Commands.SwitchReadingMode);
-      } else {
-        message('请先选择要阅读的文本！');
-      }
-    })
-  );
-
-  // 停止阅读
-  app.context.subscriptions.push(
-    commands.registerCommand(Commands.Stop, () => {
-      if (app.readingBook) {
-        app.readingBook.pause();
-        app.statusBar.hideReadingControls();
-      }
-    })
-  );
 }
