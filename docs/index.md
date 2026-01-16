@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: "GhostReader"
-  text: "VSCode 状态栏阅读器"
-  tagline: 让你在 VSCode 状态栏优雅阅读小说的摸鱼神器 📖
+  name: 'GhostReader'
+  text: 'VSCode 状态栏阅读器'
+  tagline: 让你在 VSCode 状态栏优雅阅读小说的MO神器 📖
   image:
     src: /logo.svg
     alt: GhostReader
@@ -19,36 +19,36 @@ hero:
 features:
   - icon: 📖
     title: 状态栏阅读
-    details: 在 VSCode 状态栏直接阅读 txt 小说，轻松摸鱼不留痕迹
-  
+    details: 在 VSCode 状态栏直接阅读 txt 小说，轻松MO不留痕迹
+
   - icon: ⌨️
     title: 快捷键翻页
     details: 支持 Ctrl+Left/Right 或 Cmd+Left/Right 快捷键快速翻页
-  
+
   - icon: 📚
     title: 书架管理
     details: 轻松导入、删除和管理你的书籍，支持多本书籍切换
-  
+
   - icon: 🔄
     title: 模式切换
     details: Reading/Coding 模式随时切换，避免快捷键冲突
-  
+
   - icon: 💾
     title: 进度保存
     details: 自动保存阅读进度，下次打开继续上次的阅读位置
-  
+
   - icon: ⏭️
     title: 快速跳转
     details: 支持跳转到指定页码，快速定位想要阅读的位置
-  
+
   - icon: 🎨
     title: 优雅设计
     details: 简洁的界面设计，不打扰你的正常工作流程
-  
+
   - icon: ⚙️
     title: 自定义配置
     details: 可配置显示行数和自动停止时间等多项参数
-  
+
   - icon: ⏰
     title: 自动停止
     details: 支持设置无操作后自动隐藏阅读内容，更加隐蔽
@@ -105,4 +105,3 @@ code --install-extension GhostReader-2.0.0.vsix
     <img src="https://img.shields.io/github/stars/wllzhang/GhostReader?style=social" alt="GitHub stars">
   </a>
 </div>
-

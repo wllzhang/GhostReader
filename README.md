@@ -2,7 +2,7 @@
 
 <div align="center">
 
-一个让你在 VSCode 状态栏优雅阅读小说的摸鱼神器 📖
+一个让你在 VSCode 状态栏优雅阅读小说的MO神器 📖
 
 [![Version](https://img.shields.io/visual-studio-marketplace/v/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
 [![Downloads](https://img.shields.io/visual-studio-marketplace/d/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
@@ -191,7 +191,7 @@ npm run publish
 
 ## 💡 灵感来源
 
-灵感来自工作中偶尔的摸鱼时光 😄
+灵感来自工作中偶尔的MO时光 😄
 
 ## 🙏 致谢
 

@@ -1,13 +1,13 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 
 export default defineConfig({
   title: 'GhostReader',
-  description: '在 VSCode 状态栏优雅阅读小说的摸鱼神器',
-  
+  description: '在 VSCode 状态栏优雅阅读小说的MO神器',
+
   lang: 'zh-CN',
-  
+
   base: '/GhostReader/',
-  
+
   head: [
     ['link', { rel: 'icon', href: '/GhostReader/logo.svg' }],
     ['meta', { name: 'theme-color', content: '#5f67ee' }],
@@ -17,21 +17,21 @@ export default defineConfig({
     ['meta', { property: 'og:site_name', content: 'GhostReader' }],
     ['meta', { property: 'og:url', content: 'https://wllzhang.github.io/GhostReader/' }],
   ],
-  
+
   themeConfig: {
     logo: '/logo.svg',
-    
+
     nav: [
       { text: '指南', link: '/guide/getting-started' },
       { text: '配置', link: '/guide/configuration' },
       { text: '开发', link: '/development/contributing' },
-      { 
+      {
         text: 'v2.0.0',
         items: [
           { text: '更新日志', link: 'https://github.com/wllzhang/GhostReader/releases' },
-          { text: '贡献指南', link: '/development/contributing' }
-        ]
-      }
+          { text: '贡献指南', link: '/development/contributing' },
+        ],
+      },
     ],
 
     sidebar: {
@@ -42,8 +42,8 @@ export default defineConfig({
             { text: '快速开始', link: '/guide/getting-started' },
             { text: '功能介绍', link: '/guide/features' },
             { text: '配置选项', link: '/guide/configuration' },
-          ]
-        }
+          ],
+        },
       ],
       '/development/': [
         {
@@ -52,41 +52,39 @@ export default defineConfig({
             { text: '贡献指南', link: '/development/contributing' },
             { text: '本地开发', link: '/development/local-development' },
             { text: '发布流程', link: '/development/release' },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/wllzhang/GhostReader' }
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/wllzhang/GhostReader' }],
 
     footer: {
       message: '基于 MIT 许可发布',
-      copyright: 'Copyright © 2024-present wllzhang'
+      copyright: 'Copyright © 2024-present wllzhang',
     },
 
     editLink: {
       pattern: 'https://github.com/wllzhang/GhostReader/edit/main/docs/:path',
-      text: '在 GitHub 上编辑此页'
+      text: '在 GitHub 上编辑此页',
     },
 
     lastUpdated: {
       text: '最后更新于',
       formatOptions: {
         dateStyle: 'short',
-        timeStyle: 'medium'
-      }
+        timeStyle: 'medium',
+      },
     },
 
     docFooter: {
       prev: '上一页',
-      next: '下一页'
+      next: '下一页',
     },
 
     outline: {
       label: '页面导航',
-      level: [2, 3]
+      level: [2, 3],
     },
 
     returnToTopLabel: '回到顶部',
@@ -103,7 +101,7 @@ export default defineConfig({
             translations: {
               button: {
                 buttonText: '搜索文档',
-                buttonAriaLabel: '搜索文档'
+                buttonAriaLabel: '搜索文档',
               },
               modal: {
                 noResultsText: '无法找到相关结果',
@@ -111,18 +109,17 @@ export default defineConfig({
                 footer: {
                   selectText: '选择',
                   navigateText: '切换',
-                  closeText: '关闭'
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  closeText: '关闭',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
 
   markdown: {
-    lineNumbers: true
-  }
-})
-
+    lineNumbers: true,
+  },
+});

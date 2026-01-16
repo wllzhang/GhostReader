@@ -54,12 +54,12 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 
 **使用场景：**
 
-| 行数 | 适用场景 |
-|------|---------|
-| 1 | 简短句子、最大隐蔽性 |
-| 2-3 | 平衡阅读体验和隐蔽性 |
-| 4-5 | 诗歌、对话场景 |
-| 6-10 | 快速阅读、大屏幕 |
+| 行数 | 适用场景             |
+| ---- | -------------------- |
+| 1    | 简短句子、最大隐蔽性 |
+| 2-3  | 平衡阅读体验和隐蔽性 |
+| 4-5  | 诗歌、对话场景       |
+| 6-10 | 快速阅读、大屏幕     |
 
 ::: tip 提示
 显示行数越多，内容越明显。如果需要更高的隐蔽性，建议保持默认值 1。
@@ -90,12 +90,12 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 
 **使用场景：**
 
-| 延迟时间 | 适用场景 |
-|---------|---------|
-| 0 | 不需要自动停止 |
-| 15-30 秒 | 一般办公环境 |
+| 延迟时间  | 适用场景       |
+| --------- | -------------- |
+| 0         | 不需要自动停止 |
+| 15-30 秒  | 一般办公环境   |
 | 60-120 秒 | 较为宽松的环境 |
-| 300+ 秒 | 个人开发环境 |
+| 300+ 秒   | 个人开发环境   |
 
 ::: warning 注意
 自动停止后会自动切换回 Coding mode，需要重新激活 Reading mode 才能继续使用快捷键。
@@ -103,6 +103,7 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 
 **工作原理：**
 当你在指定时间内没有进行翻页操作时，GhostReader 会：
+
 1. 隐藏状态栏的阅读内容
 2. 自动切换到 Coding mode
 3. 保存当前阅读进度
@@ -111,7 +112,7 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 
 ## 配置示例
 
-### 示例一：隐蔽摸鱼配置
+### 示例一：隐蔽MO配置
 
 适合需要高度隐蔽的办公环境。
 
@@ -123,6 +124,7 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 ```
 
 **特点：**
+
 - 单行显示，不易被发现
 - 20 秒自动停止，安全性高
 
@@ -140,6 +142,7 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 ```
 
 **特点：**
+
 - 多行显示，阅读体验更好
 - 不自动停止，专注阅读
 
@@ -157,6 +160,7 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 ```
 
 **特点：**
+
 - 双行显示，适中
 - 1 分钟自动停止，较为安全
 
@@ -172,10 +176,10 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 
 ### 默认快捷键
 
-| 命令 | Windows/Linux | macOS | 条件 |
-|------|---------------|-------|------|
-| 上一页 | `Ctrl+Left` | `Cmd+Left` | Reading mode |
-| 下一页 | `Ctrl+Right` | `Cmd+Right` | Reading mode |
+| 命令   | Windows/Linux | macOS       | 条件         |
+| ------ | ------------- | ----------- | ------------ |
+| 上一页 | `Ctrl+Left`   | `Cmd+Left`  | Reading mode |
+| 下一页 | `Ctrl+Right`  | `Cmd+Right` | Reading mode |
 
 ### 自定义快捷键
 
@@ -205,16 +209,16 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 
 **可配置的命令：**
 
-| 命令 ID | 说明 |
-|---------|-----|
-| `GhostReader.prev` | 上一页 |
-| `GhostReader.next` | 下一页 |
-| `GhostReader.jump` | 跳转到页码 |
+| 命令 ID                         | 说明           |
+| ------------------------------- | -------------- |
+| `GhostReader.prev`              | 上一页         |
+| `GhostReader.next`              | 下一页         |
+| `GhostReader.jump`              | 跳转到页码     |
 | `GhostReader.switchReadingMode` | 切换到阅读模式 |
-| `GhostReader.switchCodingMode` | 切换到编码模式 |
-| `GhostReader.import` | 导入书籍 |
-| `GhostReader.deleteEntry` | 删除书籍 |
-| `GhostReader.refreshBookList` | 刷新书架 |
+| `GhostReader.switchCodingMode`  | 切换到编码模式 |
+| `GhostReader.import`            | 导入书籍       |
+| `GhostReader.deleteEntry`       | 删除书籍       |
+| `GhostReader.refreshBookList`   | 刷新书架       |
 
 ::: tip 提示
 设置快捷键时，建议选择不会与其他常用操作冲突的组合键。
@@ -264,20 +268,20 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 
 ### 根据屏幕尺寸调整
 
-| 屏幕尺寸 | 建议显示行数 |
-|----------|-------------|
-| 13-14 寸 | 1-2 行 |
-| 15-16 寸 | 2-3 行 |
-| 17+ 寸或外接显示器 | 3-5 行 |
+| 屏幕尺寸           | 建议显示行数 |
+| ------------------ | ------------ |
+| 13-14 寸           | 1-2 行       |
+| 15-16 寸           | 2-3 行       |
+| 17+ 寸或外接显示器 | 3-5 行       |
 
 ### 根据办公环境调整
 
-| 环境类型 | 建议配置 |
-|----------|----------|
-| 开放式办公区 | displayLines: 1, autoStopDelay: 15-30 |
+| 环境类型      | 建议配置                              |
+| ------------- | ------------------------------------- |
+| 开放式办公区  | displayLines: 1, autoStopDelay: 15-30 |
 | 隔间/小办公室 | displayLines: 2, autoStopDelay: 30-60 |
-| 独立办公室 | displayLines: 3-5, autoStopDelay: 0 |
-| 远程办公/家里 | displayLines: 5+, autoStopDelay: 0 |
+| 独立办公室    | displayLines: 3-5, autoStopDelay: 0   |
+| 远程办公/家里 | displayLines: 5+, autoStopDelay: 0    |
 
 ---
 
@@ -286,13 +290,15 @@ GhostReader 提供了灵活的配置选项，让你可以根据自己的需求�
 ### Q: 修改配置后没有生效？
 
 A: 尝试以下步骤：
+
 1. 重新打开书籍
 2. 重载 VSCode 窗口（`Developer: Reload Window`）
 3. 检查配置语法是否正确
 
 ### Q: 配置文件在哪里？
 
-A: 
+A:
+
 - **用户设置**：`%APPDATA%\Code\User\settings.json` (Windows)
 - **用户设置**：`~/Library/Application Support/Code/User/settings.json` (macOS)
 - **用户设置**：`~/.config/Code/User/settings.json` (Linux)
@@ -300,7 +306,8 @@ A:
 
 ### Q: 如何导出我的配置？
 
-A: 
+A:
+
 1. 打开 `settings.json`
 2. 复制 GhostReader 相关的配置
 3. 保存到其他地方
@@ -310,4 +317,3 @@ A:
 ## 反馈
 
 如果你有配置相关的问题或建议，欢迎提交 [Issue](https://github.com/wllzhang/GhostReader/issues)。
-
