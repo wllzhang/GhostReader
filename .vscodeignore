@@ -1,0 +1,34 @@
+# Development files
+.vscode/**
+.vscode-test/**
+src/**
+.gitignore
+.editorconfig
+.prettierrc.json
+.eslintrc.json
+tsconfig.json
+build.js
+
+# Build artifacts
+out/
+node_modules/
+*.vsix
+
+# Documentation
+vsc-extension-quickstart.md
+docs/
+
+# Git
+.git
+.github
+
+# Logs
+*.log
+
+# Tests
+**/*.test.ts
+**/*.spec.ts
+
+# Others
+.DS_Store
+Thumbs.db

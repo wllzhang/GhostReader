@@ -1,0 +1,176 @@
+{
+  "name": "GhostReader",
+  "displayName": "GhostReader",
+  "description": "在vscode状态栏阅读小说。支持: 1.翻页 2.跳转到指定页码 3.暂停阅读(隐藏阅读内容) 4.快捷键阅读(Reading和Coding模式随时切换, 避免编码时快捷键冲突)",
+  "version": "2.0.0",
+  "publisher": "wllzhang",
+  "author": {
+    "name": "wllzhang"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wllzhang/GhostReader"
+  },
+  "bugs": {
+    "url": "https://github.com/wllzhang/GhostReader/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "read",
+    "reading",
+    "阅读",
+    "小说",
+    "novel",
+    "摸鱼",
+    "vscode 状态栏",
+    "status bar"
+  ],
+  "icon": "public/logo.svg",
+  "activationEvents": [
+    "onView:bookList"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "GhostReader",
+      "properties": {
+        "ghostReader.displayLines": {
+          "type": "number",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 10,
+          "description": "每次在状态栏显示的行数"
+        },
+        "ghostReader.autoStopDelay": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "description": "停留在当前行多少秒后自动停止（0为永不停止）"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "GhostReader.switchReadingMode",
+        "title": "快捷键激活",
+        "category": "GhostReader"
+      },
+      {
+        "command": "GhostReader.switchCodingMode",
+        "title": "快捷键禁用",
+        "category": "GhostReader"
+      },
+      {
+        "command": "GhostReader.prev",
+        "title": "状态栏读书：上一行"
+      },
+      {
+        "command": "GhostReader.next",
+        "title": "状态栏读书：下一行"
+      },
+      {
+        "command": "GhostReader.jump",
+        "title": "状态栏读书：跳转"
+      },
+      {
+        "command": "GhostReader.deleteEntry",
+        "title": "Delete",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "GhostReader.import",
+        "title": "Import",
+        "icon": "$(add)"
+      },
+      {
+        "command": "GhostReader.refreshBookList",
+        "title": "Refresh",
+        "icon": "$(search-refresh)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "GhostReader.prev",
+        "key": "ctrl+left",
+        "mac": "cmd+left",
+        "when": "GhostReader.isReadingMode == true"
+      },
+      {
+        "command": "GhostReader.next",
+        "key": "ctrl+right",
+        "mac": "cmd+right",
+        "when": "GhostReader.isReadingMode == true"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "GhostReader",
+          "title": "GhostReader",
+          "icon": "public/logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "GhostReader": [
+        {
+          "id": "bookList",
+          "name": "书架"
+        }
+      ]
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "GhostReader.deleteEntry",
+          "group": "inline",
+          "when": "view == bookList"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "GhostReader.import",
+          "group": "navigation",
+          "when": "view == bookList"
+        },
+        {
+          "command": "GhostReader.refreshBookList",
+          "group": "navigation",
+          "when": "view == bookList"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node build.js --production",
+    "watch": "node build.js --watch",
+    "compile": "tsc --noEmit",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "test": "vscode-test",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.10.2",
+    "@types/vscode": "^1.95.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.2.1",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}
