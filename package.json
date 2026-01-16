@@ -2,7 +2,7 @@
   "name": "GhostReader",
   "displayName": "GhostReader",
 "description": "Ghost READER 是一款 VS Code 插件，让你可以在状态栏阅读文本。",
-"version": "2.4.2",
+"version": "2.4.3",
   "publisher": "wllzhang",
   "author": {
     "name": "wllzhang"
@@ -55,12 +55,12 @@
     "commands": [
       {
         "command": "GhostReader.switchReadingMode",
-        "title": "快捷键激活",
+        "title": "切换到 Reading 模式（启动阅读）",
         "category": "GhostReader"
       },
       {
         "command": "GhostReader.switchCodingMode",
-        "title": "快捷键禁用",
+        "title": "切换到 Coding 模式（停止阅读）",
         "category": "GhostReader"
       },
       {

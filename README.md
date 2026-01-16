@@ -41,10 +41,11 @@
 
 1. 点击侧边栏的 Ghost READER 图标
 2. 点击 `+` 按钮导入 txt 文本文件
-3. 点击文本开始阅读
+3. 点击文本，会自动切换到 **Reading mode** 开始阅读
 4. 使用 `Ctrl+Left/Right` 翻页（Mac: `Cmd+Left/Right`）
+5. 点击状态栏的 **Coding** 按钮停止阅读并隐藏内容
 
-> **注意**: 需要先切换到 **Reading mode** 才能使用快捷键！
+> **提示**: 切换到 **Reading mode** 会启动阅读并显示内容，切换到 **Coding mode** 会停止阅读
 
 ## 🚀 详细使用
 
@@ -67,8 +68,10 @@
 
 ![状态栏](./docs/static/status.png)
 
-- **📖 Reading mode** - 启用阅读快捷键
-- **💻 Coding mode** - 禁用阅读快捷键（默认，停止阅读后自动切换）
+- **📖 Reading mode** - 启用阅读快捷键，开始阅读并显示内容
+- **💻 Coding mode** - 禁用阅读快捷键，停止阅读并隐藏内容
+
+> 💡 切换模式会同时控制阅读状态和快捷键，无需单独的开始/停止按钮
 
 ## 🎯 常用操作
 
