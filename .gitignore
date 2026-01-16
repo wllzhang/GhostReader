@@ -106,6 +106,12 @@ dist
 
 # Docusaurus cache and generated files
 .docusaurus
+docs/.docusaurus/
+docs/build/
+docs/node_modules/
+
+# TypeDoc generated API docs
+docs/docs/api/
 
 # Serverless directories
 .serverless/
