@@ -156,7 +156,7 @@
     "lint": "eslint src --fix --config config/eslint.config.js",
     "lint:check": "eslint src --config config/eslint.config.js",
     "format": "prettier --write \"src/**/*.ts\" --config config/prettierrc.json",
-    "test": "vscode-test --config scripts/vscode-test.mjs",
+    "test": "vscode-test",
     "package": "vsce package",
     "publish": "vsce publish",
     "docs:api": "typedoc --options config/typedoc.json",

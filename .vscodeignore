@@ -6,6 +6,7 @@ config/**
 scripts/**
 .gitignore
 .editorconfig
+.vscode-test.mjs
 tsconfig.json
 
 # Build artifacts
