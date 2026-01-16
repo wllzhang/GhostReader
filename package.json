@@ -31,7 +31,7 @@
     "vscode 状态栏",
     "status bar"
   ],
-  "icon": "public/logo.svg",
+  "icon": "public/logo.png",
   "activationEvents": [
     "onView:bookList"
   ],
@@ -152,8 +152,9 @@
     "build": "node build.js --production",
     "watch": "node build.js --watch",
     "compile": "tsc --noEmit",
-    "pretest": "npm run compile && npm run lint",
+    "pretest": "npm run compile && npm run lint:check",
     "lint": "eslint src --ext ts --fix",
+    "lint:check": "eslint src --ext ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "vscode-test",
     "package": "vsce package",
