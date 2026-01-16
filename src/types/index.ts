@@ -1,5 +1,5 @@
 /**
- * 书籍数据类型
+ * 文本数据类型
  */
 export interface BookData {
   id: string;

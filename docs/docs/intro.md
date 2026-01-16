@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Ghost READER 简介
 
-Ghost READER 是一款 VS Code 插件，让你可以在状态栏悄悄阅读小说。
+Ghost READER 是一款 VS Code 插件，让你可以在状态栏阅读文本。
 
 ## 功能特性
 
@@ -21,14 +21,14 @@ Ghost READER 是一款 VS Code 插件，让你可以在状态栏悄悄阅读小�
 
 ![安装插件](/install.png)
 
-### 导入书籍
+### 导入文本
 
 1. 点击活动栏中的 Ghost READER 图标
-2. 点击书架标题栏的 "+" 按钮导入 TXT 文件
+2. 点击阅读列表标题栏的 "+" 按钮导入 TXT 文件
 
 ### 开始阅读
 
-1. 点击书架中的书籍开始阅读
+1. 点击阅读列表中的文本开始阅读
 2. 使用 `Ctrl+Left` / `Ctrl+Right` 翻页（Mac: `Cmd+Left` / `Cmd+Right`）
 
 ## 配置选项

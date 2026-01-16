@@ -13,7 +13,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: '低调阅读',
     emoji: '👻',
-    description: <>内容显示在状态栏，不占用编辑器空间，老板路过也看不出来。</>,
+    description: <>内容显示在状态栏，不占用编辑器空间。</>,
   },
   {
     title: '快捷键翻页',
@@ -21,9 +21,9 @@ const FeatureList: FeatureItem[] = [
     description: <>使用快捷键轻松翻页，支持 Reading/Coding 模式切换，避免快捷键冲突。</>,
   },
   {
-    title: '书架管理',
+    title: '文本管理',
     emoji: '📚',
-    description: <>导入 TXT 文件到书架，自动记录阅读进度，随时继续上次阅读。</>,
+    description: <>导入 TXT 文件到阅读列表，自动记录阅读进度，随时继续上次阅读。</>,
   },
 ];
 

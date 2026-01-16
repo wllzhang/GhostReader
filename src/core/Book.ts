@@ -7,8 +7,8 @@ import type { Application } from './Application';
 import type { BookData } from '../types';
 
 /**
- * 书籍类
- * 负责单本书籍的加载、阅读和翻页
+ * 文本类
+ * 负责单个文本的加载、阅读和翻页
  */
 export class Book {
   public book: BookData;
@@ -26,7 +26,7 @@ export class Book {
   }
 
   /**
-   * 初始化书籍：解析文件并显示内容
+   * 初始化文本：解析文件并显示内容
    */
   private async init(): Promise<void> {
     try {
@@ -191,7 +191,7 @@ export class Book {
   }
 
   /**
-   * 销毁书籍实例
+   * 销毁文本实例
    */
   dispose(): void {
     this.clearAutoStopTimer();

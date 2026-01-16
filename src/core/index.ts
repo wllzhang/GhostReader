@@ -25,7 +25,7 @@ function registerReadingCommands(app: Application): void {
       if (app.readingBook) {
         app.readingBook.prevLine();
       } else {
-        message('请先选择一本书！');
+        message('请先选择要阅读的文本！');
       }
     })
   );
@@ -36,7 +36,7 @@ function registerReadingCommands(app: Application): void {
       if (app.readingBook) {
         app.readingBook.nextLine();
       } else {
-        message('请先选择一本书！');
+        message('请先选择要阅读的文本！');
       }
     })
   );
@@ -45,7 +45,7 @@ function registerReadingCommands(app: Application): void {
   app.context.subscriptions.push(
     commands.registerCommand(Commands.JumpLine, async () => {
       if (!app.readingBook) {
-        message('请先选择一本书！');
+        message('请先选择要阅读的文本！');
         return;
       }
 
@@ -70,7 +70,7 @@ function registerReadingCommands(app: Application): void {
         // 自动切换到 Reading 模式
         commands.executeCommand(Commands.SwitchReadingMode);
       } else {
-        message('请先选择一本书！');
+        message('请先选择要阅读的文本！');
       }
     })
   );

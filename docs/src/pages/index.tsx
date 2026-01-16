@@ -42,7 +42,7 @@ function HomepageHeader() {
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout title="首页" description="Ghost READER - 在 VS Code 状态栏阅读小说的插件">
+    <Layout title="首页" description="Ghost READER - 在 VS Code 状态栏阅读文本的插件">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

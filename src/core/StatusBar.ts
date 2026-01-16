@@ -57,7 +57,7 @@ export class StatusBar {
     this.contentItem = window.createStatusBarItem();
     this.contentItem.show();
     this.context.subscriptions.push(this.contentItem);
-    this.updateContent('请选择要阅读的书籍！');
+    this.updateContent('请选择要阅读的文本！');
   }
 
   /**
@@ -237,7 +237,7 @@ export class StatusBar {
   }
 
   /**
-   * 设置当前书籍（用于 tooltip 显示）
+   * 设置当前文本（用于 tooltip 显示）
    */
   setCurrentBook(book: BookData | undefined): void {
     this.currentBook = book;
