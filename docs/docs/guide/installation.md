@@ -11,7 +11,7 @@ sidebar_position: 1
 3. 搜索 "GhostReader"
 4. 点击安装
 
-![安装插件](/main.png)
+![安装插件](/install.png)
 
 ## 从 VSIX 文件安装
 
