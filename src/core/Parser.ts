@@ -10,7 +10,7 @@ export class Parser {
 
   /**
    * 读取并解析文件内容
-   * @returns 文件所有非空行的数组（保持原始行结构）
+   * @returns 文件所有行的数组（保持原始行结构，包含空行）
    */
   async parseFile(): Promise<string[]> {
     return new Promise((resolve, reject) => {
@@ -22,9 +22,7 @@ export class Parser {
       });
 
       rl.on('line', (line: string) => {
-        if (line.trim()) {
-          lines.push(line);
-        }
+        lines.push(line);
       });
 
       rl.on('close', () => {
