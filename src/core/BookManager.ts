@@ -10,8 +10,8 @@ import type { BookData } from '../types';
 import { Commands } from '../types';
 
 /**
- * 书籍管理器
- * 负责书架的增删改查和树视图更新
+ * 文本管理器
+ * 负责阅读列表的增删改查和树视图更新
  */
 export class BookManager {
   private books: BookData[];
@@ -25,7 +25,7 @@ export class BookManager {
   }
 
   /**
-   * 从存储加载书籍列表
+   * 从存储加载文本列表
    */
   private loadBooks(): BookData[] {
     const stored = getStorage('books');
@@ -69,13 +69,13 @@ export class BookManager {
     this.app.context.subscriptions.push(
       commands.registerCommand(Commands.RefreshBookList, () => {
         this.refreshTreeView();
-        message('书架已刷新！');
+        message('阅读列表已刷新！');
       })
     );
   }
 
   /**
-   * 打开书籍
+   * 打开文本
    */
   private openBook(bookItem: BookTreeItem): void {
     const { id, name, process, offset, url } = bookItem;
@@ -91,7 +91,7 @@ export class BookManager {
   }
 
   /**
-   * 删除书籍
+   * 删除文本
    */
   deleteBook(id: string): void {
     this.books = this.books.filter((book) => book.id !== id);
@@ -101,7 +101,7 @@ export class BookManager {
   }
 
   /**
-   * 更新书籍进度
+   * 更新阅读进度
    */
   updateBookProgress(id: string, process: number, offset?: number): void {
     const book = this.books.find((b) => b.id === id);
@@ -114,11 +114,11 @@ export class BookManager {
   }
 
   /**
-   * 添加书籍
+   * 添加文本
    */
   async addBook(): Promise<void> {
     const files = await window.showOpenDialog({
-      title: '选择书籍txt',
+      title: '选择文本文件',
       filters: {
         file: ['txt'],
       },
@@ -141,14 +141,14 @@ export class BookManager {
   }
 
   /**
-   * 保存书籍列表到存储
+   * 保存文本列表到存储
    */
   private saveBooks(): void {
     setStorage('books', this.books);
   }
 
   /**
-   * 获取所有书籍
+   * 获取所有文本
    */
   getBooks(): BookData[] {
     return this.books;

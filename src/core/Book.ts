@@ -7,8 +7,8 @@ import type { Application } from './Application';
 import type { BookData } from '../types';
 
 /**
- * 书籍类
- * 负责单本书籍的加载、阅读和翻页
+ * 文本类
+ * 负责单个文本的加载、阅读和翻页
  */
 export class Book {
   public book: BookData;
@@ -30,7 +30,7 @@ export class Book {
   }
 
   /**
-   * 初始化书籍：解析文件并显示内容
+   * 初始化文本：解析文件并显示内容
    */
   private async init(): Promise<void> {
     try {
@@ -47,8 +47,7 @@ export class Book {
       // 使用 updateDisplay 来应用配置
       this.updateDisplay();
       
-      // 自动显示阅读控制按钮并切换到 Reading 模式
-      this.app.statusBar.showReadingControls();
+      // 自动切换到 Reading 模式（会自动显示阅读控制按钮并启动阅读）
       commands.executeCommand(Commands.SwitchReadingMode);
 
       this.initialized = true;
@@ -209,8 +208,8 @@ export class Book {
 
     this.autoStopTimer = setTimeout(() => {
       if (this.isReading) {
-        this.pause();
-        this.app.statusBar.hideReadingControls();
+        // 切换到 Coding 模式（会自动暂停阅读并隐藏控制按钮）
+        commands.executeCommand(Commands.SwitchCodingMode);
         message('已自动停止阅读');
       }
     }, delay * 1000); // 转换为毫秒
@@ -259,7 +258,7 @@ export class Book {
   }
 
   /**
-   * 销毁书籍实例
+   * 销毁文本实例
    */
   dispose(): void {
     this.clearAutoStopTimer();

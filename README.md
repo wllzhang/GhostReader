@@ -2,20 +2,24 @@
 
 <div align="center">
 
-一个让你在 VSCode 状态栏优雅阅读小说的MO神器 📖
+一个让你在 VSCode 状态栏优雅阅读的神器 📖
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
-[![Downloads](https://img.shields.io/visual-studio-marketplace/d/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
-[![License](https://img.shields.io/github/license/wllzhang/GhostReader)](https://github.com/wllzhang/GhostReader/blob/main/LICENSE)
-[![Documentation](https://img.shields.io/badge/docs-在线文档-blue)](https://wllzhang.github.io/GhostReader/)
+[![Version](https://badgen.net/vs-marketplace/v/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
+[![Downloads](https://badgen.net/vs-marketplace/d/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
+[![Rating](https://badgen.net/vs-marketplace/rating/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
 
+
+[![Stars](https://badgen.net/github/stars/wllzhang/GhostReader)](https://github.com/wllzhang/GhostReader)
+[![Issues](https://badgen.net/github/issues/wllzhang/GhostReader)](https://github.com/wllzhang/GhostReader/issues)
+[![Documentation](https://badgen.net/badge/docs/OnlineDoc/blue)](https://wllzhang.github.io/GhostReader/)
+[![Build Status](https://github.com/wllzhang/GhostReader/actions/workflows/ci.yml/badge.svg)](https://github.com/wllzhang/GhostReader/actions/workflows/ci.yml)
 </div>
 
 ## ✨ 特性
 
-- 📖 **状态栏阅读** - 在 VSCode 状态栏直接阅读 txt 小说
+- 📖 **状态栏阅读** - 在 VSCode 状态栏直接阅读 txt 文本
 - ⌨️ **快捷键翻页** - 支持 Ctrl+Left/Right（Windows）或 Cmd+Left/Right（Mac）快捷键
-- 📚 **书架管理** - 轻松导入、删除和管理你的书籍
+- 📚 **文本管理** - 轻松导入、删除和管理你的文本文件
 - 🔄 **模式切换** - Reading/Coding 模式随时切换，避免快捷键冲突
 - 💾 **进度保存** - 自动保存阅读进度，下次打开继续阅读
 - ⏭️ **快速跳转** - 跳转到指定页码继续阅读
@@ -36,11 +40,12 @@
 ### 使用
 
 1. 点击侧边栏的 Ghost READER 图标
-2. 点击 `+` 按钮导入 txt 书籍
-3. 点击书籍开始阅读
+2. 点击 `+` 按钮导入 txt 文本文件
+3. 点击文本，会自动切换到 **Reading mode** 开始阅读
 4. 使用 `Ctrl+Left/Right` 翻页（Mac: `Cmd+Left/Right`）
+5. 点击状态栏的 **Coding** 按钮停止阅读并隐藏内容
 
-> **注意**: 需要先切换到 **Reading mode** 才能使用快捷键！
+> **提示**: 切换到 **Reading mode** 会启动阅读并显示内容，切换到 **Coding mode** 会停止阅读
 
 ## 🚀 详细使用
 
@@ -63,15 +68,17 @@
 
 ![状态栏](./docs/static/status.png)
 
-- **📖 Reading mode** - 启用阅读快捷键
-- **💻 Coding mode** - 禁用阅读快捷键（默认，停止阅读后自动切换）
+- **📖 Reading mode** - 启用阅读快捷键，开始阅读并显示内容
+- **💻 Coding mode** - 禁用阅读快捷键，停止阅读并隐藏内容
+
+> 💡 切换模式会同时控制阅读状态和快捷键，无需单独的开始/停止按钮
 
 ## 🎯 常用操作
 
 | 操作     | 说明                             |
 | -------- | -------------------------------- |
-| 导入书籍 | 点击侧边栏的 `+` 按钮            |
-| 删除书籍 | 右键点击书架中的书籍             |
+| 导入文本 | 点击侧边栏的 `+` 按钮            |
+| 删除文本 | 右键点击阅读列表中的文本         |
 | 跳转页码 | 点击状态栏的跳转按钮             |
 | 模式切换 | 点击状态栏的 Reading/Coding 按钮 |
 
@@ -114,6 +121,6 @@
 
 如果这个项目对你有帮助，请给个 ⭐ Star 支持一下！
 
-**让 VS Code 成为你的秘密阅读角落** 👻📖
+**让 VS Code 成为你的阅读空间** 👻📖
 
 </div>

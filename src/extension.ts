@@ -6,7 +6,7 @@ export function activate(context: vscode.ExtensionContext) {
   const app = setup(context);
 
   if (!app.readingBook) {
-    message('请选择要阅读的书籍！');
+    message('请选择要阅读的文本！');
   }
 }
 

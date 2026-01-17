@@ -1,8 +1,8 @@
 {
   "name": "GhostReader",
   "displayName": "GhostReader",
-  "description": "Ghost READER 是一款 VS Code 插件，让你可以在状态栏悄悄阅读小说。",
-"version": "2.4.1",
+"description": "Ghost READER 是一款 VS Code 插件，让你可以在状态栏阅读文本。",
+"version": "2.4.5",
   "publisher": "wllzhang",
   "author": {
     "name": "wllzhang"
@@ -25,9 +25,6 @@
     "read",
     "reading",
     "阅读",
-    "小说",
-    "novel",
-    "MO",
     "vscode 状态栏",
     "status bar"
   ],
@@ -65,25 +62,25 @@
     "commands": [
       {
         "command": "GhostReader.switchReadingMode",
-        "title": "快捷键激活",
+        "title": "切换到 Reading 模式（启动阅读）",
         "category": "GhostReader"
       },
       {
         "command": "GhostReader.switchCodingMode",
-        "title": "快捷键禁用",
+        "title": "切换到 Coding 模式（停止阅读）",
         "category": "GhostReader"
       },
       {
         "command": "GhostReader.prev",
-        "title": "状态栏读书：上一行"
+        "title": "状态栏阅读：上一行"
       },
       {
         "command": "GhostReader.next",
-        "title": "状态栏读书：下一行"
+        "title": "状态栏阅读：下一行"
       },
       {
         "command": "GhostReader.jump",
-        "title": "状态栏读书：跳转"
+        "title": "状态栏阅读：跳转"
       },
       {
         "command": "GhostReader.deleteEntry",
@@ -128,7 +125,7 @@
       "GhostReader": [
         {
           "id": "bookList",
-          "name": "书架"
+        "name": "阅读列表"
         }
       ]
     },

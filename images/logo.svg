@@ -30,7 +30,7 @@
     <line x1="29" y1="22" x2="38" y2="22" stroke="#666666" stroke-width="1"/>
   </g>
   
-  <!-- 眼睛图标（暗示"MO阅读"） -->
+  <!-- 眼睛图标（暗示"阅读"） -->
   <g opacity="0.9" transform="translate(92, 32)">
     <circle cx="0" cy="0" r="10" fill="#FFFFFF"/>
     <circle cx="0" cy="0" r="5" fill="#333333"/>

@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Ghost READER',
-  tagline: '在 VS Code 状态栏阅读小说',
+  tagline: '在 VS Code 状态栏阅读文本',
   favicon: 'logo.svg',
 
   future: {

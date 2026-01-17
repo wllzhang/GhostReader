@@ -25,8 +25,9 @@ export class Application {
 
     // 初始化状态栏
     this.statusBar = new StatusBar(context);
+    this.statusBar.setApp(this);
 
-    // 初始化书籍管理器
+    // 初始化文本管理器
     this.bookManager = new BookManager(this);
   }
 
@@ -44,10 +45,10 @@ export class Application {
   }
 
   /**
-   * 设置当前阅读的书籍
+   * 设置当前阅读的文本
    */
   setReadingBook(book: Book | undefined): void {
-    // 清理旧书籍实例
+    // 清理旧文本实例
     if (this.readingBook) {
       this.readingBook.dispose();
     }
