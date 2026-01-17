@@ -5,6 +5,8 @@ export interface BookData {
   id: string;
   name: string;
   process: number;
+  /** 当前行内的字符偏移（用于智能分页） */
+  offset?: number;
   url: string;
 }
 

@@ -21,6 +21,13 @@ export class Config {
   }
 
   /**
+   * 获取状态栏显示的最大字符数
+   */
+  static getDisplayWidth(): number {
+    return workspace.getConfiguration(this.SECTION).get('displayWidth', 45);
+  }
+
+  /**
    * 监听配置变化
    */
   static onDidChange(callback: () => void) {

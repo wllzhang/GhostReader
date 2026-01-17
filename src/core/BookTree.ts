@@ -6,7 +6,8 @@ export class BookTreeItem extends vscode.TreeItem {
     public name: string,
     public override id: string,
     public url: string,
-    public process: number = 0
+    public process: number = 0,
+    public offset: number = 0
   ) {
     super(name, vscode.TreeItemCollapsibleState.None);
 
@@ -15,6 +16,7 @@ export class BookTreeItem extends vscode.TreeItem {
     this.url = url;
     this.label = `《${this.name}》`;
     this.process = process;
+    this.offset = offset;
     this.tooltip = `${this.url}`;
     this.iconPath = new vscode.ThemeIcon('book');
     this.command = {
@@ -43,6 +45,6 @@ export class BookTreeProvider implements vscode.TreeDataProvider<BookTreeItem> {
 
   getChildren(): vscode.ProviderResult<BookTreeItem[]> {
     const books = this.getBooksCallback();
-    return books.map((book) => new BookTreeItem(book.name, book.id, book.url, book.process));
+    return books.map((book) => new BookTreeItem(book.name, book.id, book.url, book.process, book.offset ?? 0));
   }
 }

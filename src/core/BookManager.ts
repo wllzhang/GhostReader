@@ -78,8 +78,8 @@ export class BookManager {
    * 打开书籍
    */
   private openBook(bookItem: BookTreeItem): void {
-    const { id, name, process, url } = bookItem;
-    const book = new Book({ id, name, process, url }, this.app);
+    const { id, name, process, offset, url } = bookItem;
+    const book = new Book({ id, name, process, offset, url }, this.app);
     this.app.setReadingBook(book);
   }
 
@@ -103,10 +103,11 @@ export class BookManager {
   /**
    * 更新书籍进度
    */
-  updateBookProgress(id: string, process: number): void {
+  updateBookProgress(id: string, process: number, offset?: number): void {
     const book = this.books.find((b) => b.id === id);
     if (book) {
       book.process = process;
+      book.offset = offset ?? 0;
       this.saveBooks();
       this.refreshTreeView();
     }

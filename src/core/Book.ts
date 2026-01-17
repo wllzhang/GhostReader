@@ -22,6 +22,10 @@ export class Book {
     private app: Application
   ) {
     this.book = book;
+    // 初始化 offset
+    if (this.book.offset === undefined) {
+      this.book.offset = 0;
+    }
     this.init();
   }
 
@@ -33,8 +37,10 @@ export class Book {
       const parser = new Parser(this.book.url);
       this.contents = await parser.parseFile();
 
-      // 兼容分段算法导致的文件最大值改变
+      // 兼容：确保 process 不超过总行数
       this.book.process = Math.min(this.book.process, this.contents.length - 1);
+      // 确保 offset 有效
+      this.book.offset = this.book.offset || 0;
 
       message(`Switch to 《${this.book.name}》!`);
 
@@ -54,36 +60,78 @@ export class Book {
   }
 
   /**
-   * 上一行
+   * 获取当前行内容
+   */
+  private getCurrentLine(): string {
+    return this.contents[this.book.process] || '';
+  }
+
+  /**
+   * 获取当前行剩余字符数
+   */
+  private getRemainingLength(): number {
+    const line = this.getCurrentLine();
+    const offset = this.book.offset || 0;
+    return Math.max(0, line.length - offset);
+  }
+
+  /**
+   * 上一页（智能分页）
    */
   prevLine(): void {
     if (!this.checkReadable()) {
       return;
     }
 
-    if (this.book.process < 1) {
+    const displayWidth = Config.getDisplayWidth();
+    const offset = this.book.offset || 0;
+
+    if (offset > 0) {
+      // 当前行还有前面的内容，回退 offset
+      this.book.offset = Math.max(0, offset - displayWidth);
+    } else if (this.book.process > 0) {
+      // 跳到上一原始行的最后一个分段
+      this.book.process--;
+      const prevLine = this.getCurrentLine();
+      // 计算上一行最后一个分段的起始 offset
+      if (prevLine.length > displayWidth) {
+        const segments = Math.ceil(prevLine.length / displayWidth);
+        this.book.offset = (segments - 1) * displayWidth;
+      } else {
+        this.book.offset = 0;
+      }
+    } else {
       message('已经是第一页了');
       return;
     }
 
-    this.book.process--;
     this.updateDisplay();
   }
 
   /**
-   * 下一行
+   * 下一页（智能分页）
    */
   nextLine(): void {
     if (!this.checkReadable()) {
       return;
     }
 
-    if (this.book.process >= this.contents.length - 1) {
+    const displayWidth = Config.getDisplayWidth();
+    const offset = this.book.offset || 0;
+    const remaining = this.getRemainingLength();
+
+    if (remaining > displayWidth) {
+      // 当前行还有剩余内容，增加 offset
+      this.book.offset = offset + displayWidth;
+    } else if (this.book.process < this.contents.length - 1) {
+      // 跳到下一原始行
+      this.book.process++;
+      this.book.offset = 0;
+    } else {
       message('已经是最后一页了');
       return;
     }
 
-    this.book.process++;
     this.updateDisplay();
   }
 
@@ -101,28 +149,48 @@ export class Book {
     }
 
     this.book.process = process;
+    this.book.offset = 0; // 跳转时重置 offset
     this.updateDisplay();
   }
 
   /**
-   * 更新显示
+   * 更新显示（智能分页）
    */
   private updateDisplay(): void {
     // 清除之前的自动停止定时器
     this.clearAutoStopTimer();
 
-    // 获取要显示的行数
+    const displayWidth = Config.getDisplayWidth();
     const displayLines = Config.getDisplayLines();
-    const startIndex = this.book.process;
-    const endIndex = Math.min(startIndex + displayLines, this.contents.length);
+    const offset = this.book.offset || 0;
     
-    // 合并多行内容
-    const lines = this.contents.slice(startIndex, endIndex);
-    const content = lines.join(' ');
+    // 收集要显示的内容
+    let content = '';
+    let currentProcess = this.book.process;
+    let currentOffset = offset;
+    let linesCollected = 0;
+
+    while (linesCollected < displayLines && currentProcess < this.contents.length) {
+      const line = this.contents[currentProcess];
+      const segment = line.substring(currentOffset, currentOffset + displayWidth);
+      
+      if (segment) {
+        content += (content ? ' ' : '') + segment;
+        linesCollected++;
+      }
+      
+      // 检查是否需要继续到下一行
+      if (currentOffset + displayWidth >= line.length) {
+        currentProcess++;
+        currentOffset = 0;
+      } else {
+        currentOffset += displayWidth;
+      }
+    }
     
     this.app.statusBar.updateContent(content);
     this.app.statusBar.updateProgress(this.book.process, this.contents.length, this.book);
-    this.app.bookManager.updateBookProgress(this.book.id, this.book.process);
+    this.app.bookManager.updateBookProgress(this.book.id, this.book.process, this.book.offset);
 
     // 设置自动停止定时器
     this.startAutoStopTimer();
