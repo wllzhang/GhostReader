@@ -7,6 +7,119 @@ import type { Application } from './Application';
 import type { BookData } from '../types';
 
 /**
+ * 计算字符的显示宽度
+ * 全角字符（中文、日文、韩文等）宽度为 2，半角字符宽度为 1
+ */
+function getCharWidth(char: string): number {
+  const code = char.charCodeAt(0);
+  // 常见全角字符范围：CJK、日文假名、韩文、全角标点等
+  if (
+    (code >= 0x4e00 && code <= 0x9fff) || // CJK 统一汉字
+    (code >= 0x3400 && code <= 0x4dbf) || // CJK 扩展 A
+    (code >= 0x3000 && code <= 0x303f) || // CJK 标点符号
+    (code >= 0xff00 && code <= 0xffef) || // 全角 ASCII、半角假名
+    (code >= 0x3040 && code <= 0x309f) || // 平假名
+    (code >= 0x30a0 && code <= 0x30ff) || // 片假名
+    (code >= 0xac00 && code <= 0xd7af) || // 韩文音节
+    (code >= 0x2e80 && code <= 0x2eff) || // CJK 部首补充
+    (code >= 0x2f00 && code <= 0x2fdf)    // 康熙部首
+  ) {
+    return 2;
+  }
+  return 1;
+}
+
+/**
+ * 计算字符串的显示宽度
+ */
+function getStringDisplayWidth(str: string): number {
+  let width = 0;
+  for (const char of str) {
+    width += getCharWidth(char);
+  }
+  return width;
+}
+
+/**
+ * 按显示宽度截取字符串
+ * @param str 原始字符串
+ * @param startWidth 起始显示宽度位置
+ * @param maxWidth 最大显示宽度
+ * @returns { text: 截取的文本, nextOffset: 下一个字符的索引位置 }
+ */
+function substringByDisplayWidth(
+  str: string,
+  startCharIndex: number,
+  maxWidth: number
+): { text: string; endCharIndex: number } {
+  let currentWidth = 0;
+  let result = '';
+  let i = startCharIndex;
+
+  while (i < str.length && currentWidth < maxWidth) {
+    const char = str[i];
+    const charWidth = getCharWidth(char);
+    
+    // 如果加上这个字符会超过宽度限制，停止
+    if (currentWidth + charWidth > maxWidth) {
+      break;
+    }
+    
+    result += char;
+    currentWidth += charWidth;
+    i++;
+  }
+
+  return { text: result, endCharIndex: i };
+}
+
+/**
+ * 计算从字符索引开始，往前跳过指定显示宽度后的字符索引
+ */
+function getPrevCharIndexByDisplayWidth(
+  str: string,
+  currentCharIndex: number,
+  displayWidth: number
+): number {
+  let width = 0;
+  let i = currentCharIndex;
+  
+  while (i > 0 && width < displayWidth) {
+    i--;
+    width += getCharWidth(str[i]);
+  }
+  
+  return i;
+}
+
+/**
+ * 计算字符串按显示宽度分成多少段
+ */
+function getSegmentCount(str: string, displayWidth: number): number {
+  const totalWidth = getStringDisplayWidth(str);
+  return Math.ceil(totalWidth / displayWidth);
+}
+
+/**
+ * 计算字符串最后一个分段的起始字符索引
+ */
+function getLastSegmentCharIndex(str: string, displayWidth: number): number {
+  const segments = getSegmentCount(str, displayWidth);
+  if (segments <= 1) {
+    return 0;
+  }
+  
+  // 从头开始，跳过 (segments - 1) 个段
+  let charIndex = 0;
+  for (let seg = 0; seg < segments - 1; seg++) {
+    const { endCharIndex } = substringByDisplayWidth(str, charIndex, displayWidth);
+    charIndex = endCharIndex;
+  }
+  
+  return charIndex;
+}
+
+/**
  * 文本类
  * 负责单个文本的加载、阅读和翻页
  */
@@ -59,23 +172,9 @@ export class Book {
   }
 
   /**
-   * 获取当前行内容
-   */
-  private getCurrentLine(): string {
-    return this.contents[this.book.process] || '';
-  }
-
-  /**
-   * 获取当前行剩余字符数
-   */
-  private getRemainingLength(): number {
-    const line = this.getCurrentLine();
-    const offset = this.book.offset || 0;
-    return Math.max(0, line.length - offset);
-  }
-
-  /**
    * 上一页（智能分页）
+   * 需要考虑 displayLines，一次后退多个段
+   * offset 现在表示字符索引，而不是显示宽度
    */
   prevLine(): void {
     if (!this.checkReadable()) {
@@ -83,32 +182,41 @@ export class Book {
     }
 
     const displayWidth = Config.getDisplayWidth();
-    const offset = this.book.offset || 0;
+    const displayLines = Config.getDisplayLines();
+    let currentProcess = this.book.process;
+    let currentOffset = this.book.offset || 0;
 
-    if (offset > 0) {
-      // 当前行还有前面的内容，回退 offset
-      this.book.offset = Math.max(0, offset - displayWidth);
-    } else if (this.book.process > 0) {
-      // 跳到上一原始行的最后一个分段
-      this.book.process--;
-      const prevLine = this.getCurrentLine();
-      // 计算上一行最后一个分段的起始 offset
-      if (prevLine.length > displayWidth) {
-        const segments = Math.ceil(prevLine.length / displayWidth);
-        this.book.offset = (segments - 1) * displayWidth;
+    // 后退 displayLines 个段
+    for (let i = 0; i < displayLines; i++) {
+      if (currentOffset > 0) {
+        // 当前行还有前面的内容，按显示宽度回退
+        const line = this.contents[currentProcess];
+        currentOffset = getPrevCharIndexByDisplayWidth(line, currentOffset, displayWidth);
+      } else if (currentProcess > 0) {
+        // 跳到上一原始行的最后一个分段
+        currentProcess--;
+        const prevLine = this.contents[currentProcess];
+        // 计算上一行最后一个分段的起始字符索引
+        currentOffset = getLastSegmentCharIndex(prevLine, displayWidth);
       } else {
-        this.book.offset = 0;
+        // 已经到第一页了
+        if (i === 0) {
+          message('已经是第一页了');
+          return;
+        }
+        break;
       }
-    } else {
-      message('已经是第一页了');
-      return;
     }
 
+    this.book.process = currentProcess;
+    this.book.offset = currentOffset;
     this.updateDisplay();
   }
 
   /**
    * 下一页（智能分页）
+   * 需要考虑 displayLines，一次前进多个段
+   * offset 现在表示字符索引，而不是显示宽度
    */
   nextLine(): void {
     if (!this.checkReadable()) {
@@ -116,21 +224,39 @@ export class Book {
     }
 
     const displayWidth = Config.getDisplayWidth();
-    const offset = this.book.offset || 0;
-    const remaining = this.getRemainingLength();
-
-    if (remaining > displayWidth) {
-      // 当前行还有剩余内容，增加 offset
-      this.book.offset = offset + displayWidth;
-    } else if (this.book.process < this.contents.length - 1) {
-      // 跳到下一原始行
-      this.book.process++;
-      this.book.offset = 0;
-    } else {
-      message('已经是最后一页了');
-      return;
+    const displayLines = Config.getDisplayLines();
+    let currentProcess = this.book.process;
+    let currentOffset = this.book.offset || 0;
+    
+    // 前进 displayLines 个段
+    for (let i = 0; i < displayLines; i++) {
+      const line = this.contents[currentProcess];
+      if (!line) break;
+      
+      // 按显示宽度截取，获取下一个字符索引
+      const { endCharIndex } = substringByDisplayWidth(line, currentOffset, displayWidth);
+      
+      if (endCharIndex >= line.length) {
+        // 当前行已经读完，跳到下一行
+        if (currentProcess < this.contents.length - 1) {
+          currentProcess++;
+          currentOffset = 0;
+        } else {
+          // 已经到最后了
+          if (i === 0) {
+            message('已经是最后一页了');
+            return;
+          }
+          break;
+        }
+      } else {
+        // 当前行还有剩余内容
+        currentOffset = endCharIndex;
+      }
     }
 
+    this.book.process = currentProcess;
+    this.book.offset = currentOffset;
     this.updateDisplay();
   }
 
@@ -154,6 +280,7 @@ export class Book {
 
   /**
    * 更新显示（智能分页）
+   * offset 现在表示字符索引，按显示宽度截取内容
    */
   private updateDisplay(): void {
     // 清除之前的自动停止定时器
@@ -171,7 +298,13 @@ export class Book {
 
     while (linesCollected < displayLines && currentProcess < this.contents.length) {
       const line = this.contents[currentProcess];
-      const segment = line.substring(currentOffset, currentOffset + displayWidth);
+      
+      // 按显示宽度截取
+      const { text: segment, endCharIndex } = substringByDisplayWidth(
+        line,
+        currentOffset,
+        displayWidth
+      );
       
       if (segment) {
         content += (content ? ' ' : '') + segment;
@@ -179,11 +312,11 @@ export class Book {
       }
       
       // 检查是否需要继续到下一行
-      if (currentOffset + displayWidth >= line.length) {
+      if (endCharIndex >= line.length) {
         currentProcess++;
         currentOffset = 0;
       } else {
-        currentOffset += displayWidth;
+        currentOffset = endCharIndex;
       }
     }
     
