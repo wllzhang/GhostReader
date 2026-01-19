@@ -2,7 +2,7 @@
   "name": "GhostReader",
   "displayName": "GhostReader",
 "description": "Ghost READER 是一款 VS Code 插件，让你可以在状态栏阅读文本。",
-"version": "2.4.6",
+"version": "2.5.0",
   "publisher": "wllzhang",
   "author": {
     "name": "wllzhang"
@@ -42,7 +42,7 @@
           "default": 1,
           "minimum": 1,
           "maximum": 10,
-          "description": "每次在状态栏显示的行数"
+          "description": "每次在状态栏显示的行数（也是翻页步长）"
         },
         "ghostReader.autoStopDelay": {
           "type": "number",
@@ -55,7 +55,7 @@
           "default": 45,
           "minimum": 10,
           "maximum": 200,
-          "description": "状态栏每次显示的最大字符数"
+          "description": "状态栏每次显示的最大宽度（中文占2宽度，英文占1宽度）"
         }
       }
     },

@@ -90,11 +90,13 @@
 
 | 配置项                      | 说明                         | 默认值 | 范围     |
 | --------------------------- | ---------------------------- | ------ | -------- |
-| `ghostReader.displayLines`  | 状态栏显示的行数             | 1      | 1-10     |
-| `ghostReader.displayWidth`  | 状态栏每次显示的最大字符数   | 45     | 10-200   |
+| `ghostReader.displayLines`  | 状态栏显示的行数（翻页步长） | 1      | 1-10     |
+| `ghostReader.displayWidth`  | 状态栏每次显示的最大宽度     | 45     | 10-200   |
 | `ghostReader.autoStopDelay` | 自动停止延迟（秒）           | 0      | 0 或正数 |
 
 > 💡 **智能分页**: 当内容超过 `displayWidth` 时，会自动拆分成多个虚拟页，翻页时先显示当前行剩余部分再跳下一行
+> 
+> 💡 **显示宽度**: `displayWidth` 按显示宽度计算，中文等全角字符占 2 个宽度，英文占 1 个宽度。例如 `displayWidth=50` 约显示 25 个中文或 50 个英文
 > 
 > 💡 设置 `autoStopDelay` 为 30 表示 30 秒无操作后自动隐藏阅读内容
 
@@ -109,6 +111,7 @@
 ## 📖 文档与支持
 
 - 📚 [完整文档](https://wllzhang.github.io/GhostReader/) - 详细使用指南和 API 文档
+- 📝 [更新日志](CHANGELOG.md) - 版本更新记录
 - 🐛 [报告问题](https://github.com/wllzhang/GhostReader/issues) - Bug 报告和功能建议
 - 💬 [获取帮助](.github/SUPPORT.md) - 常见问题和支持渠道
 - 🔒 [安全政策](.github/SECURITY.md) - 安全漏洞报告流程
