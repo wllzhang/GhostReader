@@ -2,7 +2,7 @@
   "name": "GhostReader",
   "displayName": "GhostReader",
 "description": "Ghost READER 是一款 VS Code 插件，让你可以在状态栏阅读文本。",
-"version": "2.5.0",
+"version": "2.5.1",
   "publisher": "wllzhang",
   "author": {
     "name": "wllzhang"

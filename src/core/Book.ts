@@ -231,7 +231,7 @@ export class Book {
     // 前进 displayLines 个段
     for (let i = 0; i < displayLines; i++) {
       const line = this.contents[currentProcess];
-      if (!line) break;
+      if (line === undefined) break;
       
       // 按显示宽度截取，获取下一个字符索引
       const { endCharIndex } = substringByDisplayWidth(line, currentOffset, displayWidth);
