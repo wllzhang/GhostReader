@@ -2,6 +2,7 @@ name: Publish
 
 on:
   push:
+    branches: [main]
     tags:
       - "v*"
 
@@ -9,12 +10,83 @@ permissions:
   contents: write
 
 jobs:
-  publish:
+  # 当 package.json 变化时，检测版本并自动打 tag
+  auto-tag:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.current.outputs.version }}
+      should_publish: ${{ steps.create_tag.outputs.created }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get current version
+        id: current
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get previous version
+        id: previous
+        run: |
+          git checkout HEAD~1 -- package.json 2>/dev/null || echo "No previous commit"
+          PREV_VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "0.0.0")
+          git checkout HEAD -- package.json
+          echo "version=$PREV_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if version changed
+        id: check
+        run: |
+          if [ "${{ steps.current.outputs.version }}" != "${{ steps.previous.outputs.version }}" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Version changed: ${{ steps.previous.outputs.version }} → ${{ steps.current.outputs.version }}"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Version unchanged: ${{ steps.current.outputs.version }}"
+          fi
+
+      - name: Check if tag exists
+        id: tag_exists
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          if git rev-parse "v${{ steps.current.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Tag v${{ steps.current.outputs.version }} already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and push tag
+        id: create_tag
+        if: steps.check.outputs.changed == 'true' && steps.tag_exists.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v${{ steps.current.outputs.version }}" -m "Release v${{ steps.current.outputs.version }}"
+          git push origin "v${{ steps.current.outputs.version }}"
+          echo "✅ Created and pushed tag v${{ steps.current.outputs.version }}"
+          echo "created=true" >> $GITHUB_OUTPUT
+
+  # 发布流程
+  publish:
+    runs-on: ubuntu-latest
+    needs: [auto-tag]
+    # 当手动推送 tag 时直接运行，或者 auto-tag 成功创建了新 tag 时运行
+    if: |
+      always() && (
+        startsWith(github.ref, 'refs/tags/v') ||
+        needs.auto-tag.outputs.should_publish == 'true'
+      )
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.auto-tag.outputs.version && format('v{0}', needs.auto-tag.outputs.version) || github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -45,13 +117,19 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
-      - name: Get version from tag
+      - name: Get version
         id: get_version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: |
+          if [ -n "${{ needs.auto-tag.outputs.version }}" ]; then
+            echo "VERSION=${{ needs.auto-tag.outputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
           files: "*.vsix"
           generate_release_notes: true
           draft: false
