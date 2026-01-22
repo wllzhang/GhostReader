@@ -3,11 +3,8 @@ import message from './utils/message';
 import { setup } from './core/index';
 
 export function activate(context: vscode.ExtensionContext) {
-  const app = setup(context);
-
-  if (!app.readingBook) {
-    message('请选择要阅读的文本！');
-  }
+  setup(context);
+  // 不再显示提示消息，让用户自然使用扩展
 }
 
 export function deactivate() {}

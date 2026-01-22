@@ -174,7 +174,7 @@ export class Book {
    * 更新显示（智能分页）
    * offset 现在表示字符索引，按显示宽度截取内容
    */
-  private updateDisplay(): void {
+  updateDisplay(): void {
     // 清除之前的自动停止定时器
     this.clearAutoStopTimer();
 
@@ -191,6 +191,14 @@ export class Book {
     while (linesCollected < displayLines && currentProcess < this.contents.length) {
       const line = this.contents[currentProcess];
       
+      // 处理空行：空行也算一行，跳过到下一行
+      if (line === undefined || line.length === 0) {
+        linesCollected++;
+        currentProcess++;
+        currentOffset = 0;
+        continue;
+      }
+      
       // 按显示宽度截取
       const { text: segment, endCharIndex } = substringByDisplayWidth(
         line,
@@ -198,6 +206,7 @@ export class Book {
         displayWidth
       );
       
+      // 如果截取到内容，添加到显示文本中
       if (segment) {
         content += (content ? ' ' : '') + segment;
         linesCollected++;
@@ -209,6 +218,10 @@ export class Book {
         currentOffset = 0;
       } else {
         currentOffset = endCharIndex;
+        // 如果当前行还有剩余内容但已经收集够了，跳出循环
+        if (linesCollected >= displayLines) {
+          break;
+        }
       }
     }
     

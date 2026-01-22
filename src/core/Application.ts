@@ -3,6 +3,7 @@ import { BookManager } from './BookManager';
 import { StatusBar } from './StatusBar';
 import { Book } from './Book';
 import { setupStorage } from '../utils/storage';
+import { Config } from '../utils/config';
 import type { BookData } from '../types';
 
 /**
@@ -29,6 +30,23 @@ export class Application {
 
     // 初始化文本管理器
     this.bookManager = new BookManager(this);
+
+    // 监听配置变化
+    this.setupConfigWatcher();
+  }
+
+  /**
+   * 设置配置变化监听
+   */
+  private setupConfigWatcher(): void {
+    this.context.subscriptions.push(
+      Config.onDidChange(() => {
+        // 当配置变化时，如果正在阅读，更新显示
+        if (this.readingBook && this.readingBook.isReading) {
+          this.readingBook.updateDisplay();
+        }
+      })
+    );
   }
 
   /**

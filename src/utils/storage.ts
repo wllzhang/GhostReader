@@ -13,16 +13,14 @@ export function setupStorage(context: ExtensionContext): void {
 /**
  * 获取存储的值
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getStorage<T = any>(key: string): T | undefined {
+export function getStorage<T>(key: string): T | undefined {
   return storage.get<T>(key);
 }
 
 /**
  * 设置存储的值
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function setStorage<T = any>(key: string, value: T): void {
+export function setStorage<T>(key: string, value: T): void {
   storage.update(key, value);
 }
 

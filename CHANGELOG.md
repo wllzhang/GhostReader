@@ -5,6 +5,27 @@ All notable changes to GhostReader will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.3] - 2025-01-19
+
+### Added
+
+- ✨ 新增配置变化监听功能
+  - 当用户修改 `displayLines`、`displayWidth` 或 `autoStopDelay` 配置时，自动更新当前阅读内容的显示
+  - 无需重启扩展即可生效
+
+### Changed
+
+- ⚡ 优化代码质量和类型安全
+  - 移除 `storage.ts` 中的 `any` 类型，改用泛型约束
+  - 简化 `BookManager.loadBooks()` 的冗余检查逻辑
+  - 优化 `StatusBar` 初始化逻辑，默认切换到 Coding 模式（避免在没有书籍时显示阅读控制）
+  - 移除扩展激活时的提示消息，改善用户体验
+
+### Fixed
+
+- 🐛 修复 package.json 中的 linter 警告（移除不必要的 `activationEvents`）
+- 🐛 改进空行处理逻辑，确保翻页时正确处理空行
+
 ## [2.5.1] - 2025-01-19
 
 ### Fixed

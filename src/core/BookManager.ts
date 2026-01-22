@@ -28,8 +28,8 @@ export class BookManager {
    * 从存储加载文本列表
    */
   private loadBooks(): BookData[] {
-    const stored = getStorage('books');
-    if (!stored || stored === undefined || stored === 'undefined') {
+    const stored = getStorage<BookData[]>('books');
+    if (!stored) {
       setStorage('books', []);
       return [];
     }
