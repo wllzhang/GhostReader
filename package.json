@@ -53,6 +53,20 @@
           "minimum": 10,
           "maximum": 200,
           "description": "状态栏每次显示的最大宽度（中文占2宽度，英文占1宽度）"
+        },
+        "ghostReader.autoScrollInterval": {
+          "type": "number",
+          "default": 300,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "自动滚动间隔时间（毫秒），当处于 Reading 模式且有打开的文件时，会自动滚动编辑器内容。设置为 0 则禁用自动滚动"
+        },
+        "ghostReader.autoScrollPauseDuration": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 0,
+          "maximum": 30000,
+          "description": "自动滚动停顿时间（毫秒），当触发随机停顿时，会暂停滚动的时间长度"
         }
       }
     },

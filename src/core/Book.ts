@@ -6,7 +6,7 @@ import {
   getPrevCharIndexByDisplayWidth,
   getLastSegmentCharIndex,
 } from '../utils/display';
-import { commands } from 'vscode';
+import { commands, window, Range, TextEditorRevealType } from 'vscode';
 import { Commands } from '../types';
 import type { Application } from './Application';
 import type { BookData } from '../types';
@@ -21,6 +21,12 @@ export class Book {
   public isReading: boolean = true;
   private initialized: boolean = false;
   private autoStopTimer?: NodeJS.Timeout;
+  private autoScrollTimer?: NodeJS.Timeout;
+  private scrollPauseTimer?: NodeJS.Timeout;
+  private scrollDirection: 'down' | 'up' = 'down';
+  private currentScrollLine: number = 0;
+  private isPaused: boolean = false;
+  private consecutiveScrollCount: number = 0; // 连续滚动次数，用于随机停顿
 
   constructor(
     book: BookData,
@@ -285,6 +291,7 @@ export class Book {
   pause(): void {
     this.isReading = false;
     this.clearAutoStopTimer();
+    this.stopAutoScroll();
   }
 
   /**
@@ -293,6 +300,157 @@ export class Book {
   start(): void {
     this.isReading = true;
     this.updateDisplay();
+    this.startAutoScroll();
+  }
+
+  /**
+   * 启动自动滚动
+   */
+  private startAutoScroll(): void {
+    this.stopAutoScroll(); // 先停止之前的滚动
+
+    const interval = Config.getAutoScrollInterval();
+    if (interval <= 0) {
+      return;
+    }
+
+    // 初始化滚动位置
+    const editor = window.activeTextEditor;
+    if (editor) {
+      this.currentScrollLine = editor.selection.active.line;
+    }
+
+    this.isPaused = false;
+    this.consecutiveScrollCount = 0;
+    this.scrollDirection = 'down';
+
+    // 使用递归的 setTimeout 而不是 setInterval，以便支持动态间隔
+    this.scheduleNextScroll(interval);
+  }
+
+  /**
+   * 安排下一次滚动
+   */
+  private scheduleNextScroll(baseInterval: number): void {
+    if (!this.isReading) {
+      return;
+    }
+
+    // 如果正在暂停，不安排下一次滚动
+    if (this.isPaused) {
+      return;
+    }
+
+    // 计算实际间隔（加入随机变化，模拟人类阅读速度变化）
+    const variation = baseInterval * 0.3; // 30% 的变化范围
+    const randomVariation = (Math.random() - 0.5) * 2 * variation;
+    const actualInterval = Math.max(50, baseInterval + randomVariation);
+
+    this.autoScrollTimer = setTimeout(() => {
+      this.performAutoScroll();
+      // 继续安排下一次滚动
+      this.scheduleNextScroll(baseInterval);
+    }, actualInterval);
+  }
+
+  /**
+   * 停止自动滚动
+   */
+  private stopAutoScroll(): void {
+    if (this.autoScrollTimer) {
+      clearTimeout(this.autoScrollTimer);
+      this.autoScrollTimer = undefined;
+    }
+    if (this.scrollPauseTimer) {
+      clearTimeout(this.scrollPauseTimer);
+      this.scrollPauseTimer = undefined;
+    }
+    this.isPaused = false;
+  }
+
+  /**
+   * 执行自动滚动
+   */
+  private performAutoScroll(): void {
+    if (!this.isReading || this.isPaused) {
+      return;
+    }
+
+    const editor = window.activeTextEditor;
+    if (!editor) {
+      return; // 没有活动的编辑器，不滚动
+    }
+
+    const document = editor.document;
+    const totalLines = document.lineCount;
+    
+    if (totalLines === 0) {
+      return; // 空文件，不滚动
+    }
+
+    // 如果当前滚动行超出文档范围，重置到合适的位置
+    if (this.currentScrollLine < 0 || this.currentScrollLine >= totalLines) {
+      this.currentScrollLine = Math.max(0, Math.min(this.currentScrollLine, totalLines - 1));
+      this.scrollDirection = 'down';
+    }
+
+    // 随机决定是否停顿（8% 的概率，模拟人类阅读时的停顿）
+    const shouldPause = Math.random() < 0.08 && this.consecutiveScrollCount > 2;
+
+    if (shouldPause) {
+      // 获取配置的停顿时间，并加入随机变化
+      const basePauseDuration = Config.getAutoScrollPauseDuration();
+      const pauseDuration = basePauseDuration + Math.random() * 1500;
+      this.isPaused = true;
+      this.consecutiveScrollCount = 0;
+      
+      this.scrollPauseTimer = setTimeout(() => {
+        this.isPaused = false;
+        this.scrollPauseTimer = undefined;
+        // 暂停结束后，继续安排下一次滚动
+        const interval = Config.getAutoScrollInterval();
+        if (interval > 0 && this.isReading) {
+          this.scheduleNextScroll(interval);
+        }
+      }, pauseDuration);
+      return;
+    }
+
+    // 每次滚动一行
+    const scrollLines = 1;
+
+    // 执行滚动
+    for (let i = 0; i < scrollLines; i++) {
+      if (this.scrollDirection === 'down') {
+        this.currentScrollLine++;
+        // 如果到达底部，切换方向
+        if (this.currentScrollLine >= totalLines) {
+          this.currentScrollLine = totalLines - 1;
+          this.scrollDirection = 'up';
+          this.consecutiveScrollCount = 0;
+          break;
+        }
+      } else {
+        this.currentScrollLine--;
+        // 如果到达顶部，切换方向
+        if (this.currentScrollLine < 0) {
+          this.currentScrollLine = 0;
+          this.scrollDirection = 'down';
+          this.consecutiveScrollCount = 0;
+          break;
+        }
+      }
+    }
+
+    this.consecutiveScrollCount++;
+
+    // 确保滚动行在有效范围内
+    const targetLine = Math.max(0, Math.min(this.currentScrollLine, totalLines - 1));
+    const line = document.lineAt(targetLine);
+    const range = new Range(line.lineNumber, 0, line.lineNumber, 0);
+    
+    // 固定使用中心位置显示
+    editor.revealRange(range, TextEditorRevealType.InCenter);
   }
 
   /**
@@ -300,5 +458,6 @@ export class Book {
    */
   dispose(): void {
     this.clearAutoStopTimer();
+    this.stopAutoScroll();
   }
 }
