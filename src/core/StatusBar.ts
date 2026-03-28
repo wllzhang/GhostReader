@@ -53,8 +53,8 @@ export class StatusBar {
     this.createModeItems();
     this.registerCommands();
 
-    // 默认为 Reading 模式
-    commands.executeCommand(Commands.SwitchReadingMode);
+    // 默认为 Coding 模式（等待用户选择书籍）
+    commands.executeCommand(Commands.SwitchCodingMode);
   }
 
   /**

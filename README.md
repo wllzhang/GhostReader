@@ -10,11 +10,11 @@ Read comfortably in the VS Code status bar 📖
 [![Downloads](https://badgen.net/vs-marketplace/d/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
 [![Rating](https://badgen.net/vs-marketplace/rating/wllzhang.GhostReader)](https://marketplace.visualstudio.com/items?itemName=wllzhang.GhostReader)
 
-
 [![Stars](https://badgen.net/github/stars/wllzhang/GhostReader)](https://github.com/wllzhang/GhostReader)
 [![Issues](https://badgen.net/github/issues/wllzhang/GhostReader)](https://github.com/wllzhang/GhostReader/issues)
 [![Documentation](https://badgen.net/badge/docs/OnlineDoc/blue)](https://wllzhang.github.io/GhostReader/)
 [![Build Status](https://github.com/wllzhang/GhostReader/actions/workflows/ci.yml/badge.svg)](https://github.com/wllzhang/GhostReader/actions/workflows/ci.yml)
+
 </div>
 
 ## Features
@@ -57,10 +57,10 @@ Read comfortably in the VS Code status bar 📖
 
 ### Shortcuts
 
-| Action      | Windows       | Mac          |
-| ----------- | ------------- | ------------ |
-| Previous    | `Ctrl+Left`   | `Cmd+Left`   |
-| Next        | `Ctrl+Right`  | `Cmd+Right`  |
+| Action   | Windows      | Mac         |
+| -------- | ------------ | ----------- |
+| Previous | `Ctrl+Left`  | `Cmd+Left`  |
+| Next     | `Ctrl+Right` | `Cmd+Right` |
 
 > **Important:** Shortcuts work only in **Reading mode**.
 
@@ -77,11 +77,11 @@ Read comfortably in the VS Code status bar 📖
 
 ## Common tasks
 
-| Task        | How |
-| ----------- | --- |
-| Import      | Click **+** in the sidebar |
-| Delete      | Right-click an item in the reading list |
-| Jump        | Use the jump control in the status bar |
+| Task        | How                                              |
+| ----------- | ------------------------------------------------ |
+| Import      | Click **+** in the sidebar                       |
+| Delete      | Right-click an item in the reading list          |
+| Jump        | Use the jump control in the status bar           |
 | Switch mode | Click **Reading** / **Coding** in the status bar |
 
 ## Settings
@@ -90,11 +90,11 @@ Search for **GhostReader** in VS Code Settings:
 
 ![Settings](./docs/static/args.png)
 
-| Setting                     | Description                          | Default | Range        |
-| --------------------------- | ------------------------------------ | ------- | ------------ |
-| `ghostReader.displayLines`  | Lines shown in the status bar        | 1       | 1–10         |
-| `ghostReader.displayWidth`  | Max characters per “page” in bar   | 45      | 10–200       |
-| `ghostReader.autoStopDelay` | Auto-hide after idle (seconds)       | 0       | 0 = disabled |
+| Setting                     | Description                      | Default | Range        |
+| --------------------------- | -------------------------------- | ------- | ------------ |
+| `ghostReader.displayLines`  | Lines shown in the status bar    | 1       | 1–10         |
+| `ghostReader.displayWidth`  | Max characters per “page” in bar | 45      | 10–200       |
+| `ghostReader.autoStopDelay` | Auto-hide after idle (seconds)   | 0       | 0 = disabled |
 
 > **Paging:** If a line exceeds `displayWidth`, it is split into virtual pages; next/prev moves within the line before the next line.
 >

@@ -2,7 +2,7 @@
   "name": "GhostReader",
   "displayName": "GhostReader",
 "description": "Ghost READER 是一款 VS Code 插件，让你可以在状态栏阅读文本。",
-"version": "2.4.6",
+"version": "2.5.5",
   "publisher": "wllzhang",
   "author": {
     "name": "wllzhang"
@@ -29,9 +29,6 @@
     "status bar"
   ],
   "icon": "images/logo.png",
-  "activationEvents": [
-    "onView:bookList"
-  ],
   "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
@@ -42,7 +39,7 @@
           "default": 1,
           "minimum": 1,
           "maximum": 10,
-          "description": "每次在状态栏显示的行数"
+          "description": "每次在状态栏显示的行数（也是翻页步长）"
         },
         "ghostReader.autoStopDelay": {
           "type": "number",
@@ -55,7 +52,21 @@
           "default": 45,
           "minimum": 10,
           "maximum": 200,
-          "description": "状态栏每次显示的最大字符数"
+          "description": "状态栏每次显示的最大宽度（中文占2宽度，英文占1宽度）"
+        },
+        "ghostReader.autoScrollInterval": {
+          "type": "number",
+          "default": 300,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "自动滚动间隔时间（毫秒），当处于 Reading 模式且有打开的文件时，会自动滚动编辑器内容。设置为 0 则禁用自动滚动"
+        },
+        "ghostReader.autoScrollPauseDuration": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 0,
+          "maximum": 30000,
+          "description": "自动滚动停顿时间（毫秒），当触发随机停顿时，会暂停滚动的时间长度"
         }
       }
     },

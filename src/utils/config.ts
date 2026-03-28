@@ -28,6 +28,20 @@ export class Config {
   }
 
   /**
+   * 获取自动滚动间隔时间（毫秒）
+   */
+  static getAutoScrollInterval(): number {
+    return workspace.getConfiguration(this.SECTION).get('autoScrollInterval', 300);
+  }
+
+  /**
+   * 获取自动滚动停顿时间（毫秒）
+   */
+  static getAutoScrollPauseDuration(): number {
+    return workspace.getConfiguration(this.SECTION).get('autoScrollPauseDuration', 5000);
+  }
+
+  /**
    * 监听配置变化
    */
   static onDidChange(callback: () => void) {
